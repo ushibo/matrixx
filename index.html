@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <title>Matrix</title>
     <link type="text/css" href="css/style.css" media="all" rel="stylesheet">
+    <script
+            src="https://code.jquery.com/jquery-3.2.0.slim.min.js"
+            integrity="sha256-qLAv0kBAihcHZLI3fv3WITKeRsUX27hd6upBBa0MSow="
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Matrix</h1>
+<h1>Matrix</h1>
+<input type="text">
+<button>OK</button>
+<script>
+    console.log('token', get('t'));
+
+    function get(name){
+        if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+            return decodeURIComponent(name[1]);
+    }
+</script>
 </body>
 </html>
