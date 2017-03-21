@@ -1,3 +1,6 @@
+html,body { height: 100%; margin: 0px; padding: 0px; }
+#root, #full { height: 100% }
+
 body {
   background: black;
   font-family: 'Matrix', sans-serif;
@@ -9,6 +12,68 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  color: #1ec503;
-  font-family: 'Matrix', sans-serif;
+  color: #5cffbb;
+  font-family: 'Helvetica', sans-serif;
+
+}
+
+textarea {
+  -webkit-transition: all .30s ease-in-out;
+  -moz-transition: all .30s ease-in-out;
+  -ms-transition: all .30s ease-in-out;
+  -o-transition: all .30s ease-in-out;
+  outline: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 4%;
+  border: 1px solid #43d1af;
+  padding: 3%;
+  color: #43d1af;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 14px;
+  background: rgba(0,0,0, 0.1);
+}
+
+input[type="submit"], input[type="button"], button {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  padding: 3%;
+  background: #43d1af;
+  border-bottom: 2px solid #30c29e;
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+.input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+  background: #2ebc99;
+}
+
+#background {
+  background: url(images/background.gif) repeat 5% 5%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100;
+}
+
+#midground {
+  background: url(images/midground.png) repeat 20% 20%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100;
+}
+
+#foreground {
+  background: url(images/foreground.png) repeat 90% 110%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 200;
 }

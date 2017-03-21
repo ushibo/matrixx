@@ -17,6 +17,7 @@ class User {
 class App extends Component {
     textarea;
     currentUser = new User("John", "John Doe");
+    isSent;
 
     componentWillMount = () => {
         const token = this.getParameterByName('t');
@@ -27,7 +28,7 @@ class App extends Component {
                 return;
             }
             console.log('decode', decode);
-            this.currentUser = new User(decode.name, decode.fullName)
+            this.currentUser = new User(decode.name, decode.fullName);
         } catch (err) {
         }
 
@@ -41,36 +42,61 @@ class App extends Component {
 
     onClick = () => {
         firebase.auth().signInWithEmailAndPassword('test@test.com', '123456').then(() => {
-            this.writeUserData(this.currentUser.fullName, this.textarea);
+            return this.writeUserData(this.currentUser.fullName, this.textarea);
+        }).then(() => {
+            this.data = "";
+            this.isSent = true;
+            console.log("isSent", this.isSent)
+            this.forceUpdate();
         }).catch(function (error) {
-            console.log(error)
+            console.log(error);
+            this.isSent = false;
         });
     };
 
     writeUserData = (fullName, text) => {
-        firebase.database().ref('users/' + fullName).set({
+        return firebase.database().ref('users/' + fullName).set({
             text: text
         });
-        this.data = "";
     };
 
     handleChange = (event) => {
         this.textarea = event.target.value;
     };
 
+
     render() {
+        if (this.isSent) {
+            return this.renderSentResult()
+        }
+        return this.renderForm();
+    }
+
+    renderForm() {
         return (
             <div className="App">
-                <h1>Wake up {this.currentUser.name}!</h1>
-                <h2>The Matrix has you…</h2>
-                <h2>Free your mind on the 1st of April, Suvorov st. 92, at 6 P.M.</h2>
+                <div className="AppForm">
+                    <h1>Wake up {this.currentUser.name}!</h1>
+                    <h2>The Matrix has you…</h2>
+                    <h2>Free your mind on the 1st of April, Suvorov st. 92, at 6 P.M.</h2>
 
-                <h2>But now, write here smth about yourself that nobody </h2>
-                <h2>knows____________</h2>
-                <h2>It will help you</h2>
+                    <h2>But now, write here smth about yourself that nobody </h2>
+                    <h2>knows____________</h2>
+                    <h2>It will help you</h2>
 
-                <textarea value={this.textarea} onChange={this.handleChange}/>
-                <button onClick={this.onClick}>OK</button>
+                    <textarea value={this.textarea} onChange={this.handleChange}/>
+                    <button onClick={this.onClick}>OK</button>
+                </div>
+            </div>
+        );
+    }
+
+    renderSentResult() {
+        return (
+            <div className="App">
+                <div className="AppForm">
+                    <h1>OK</h1>
+                </div>
             </div>
         );
     }

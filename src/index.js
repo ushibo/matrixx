@@ -9,7 +9,10 @@ import './index.css';
 
 ReactDOM.render(
     <Router>
-        <div>
+        <div id="full">
+            <div id="background"></div>
+            <div id="midground"></div>
+            <div id="foreground"></div>
             <Route path="/" component={App}/>
         </div>
     </Router>,
