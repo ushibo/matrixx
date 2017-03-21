@@ -15,14 +15,19 @@ class User {
 }
 
 class App extends Component {
-    currentUser;
-    text;
+    textarea;
+    currentUser = new User("John", "John Doe");
 
     componentWillMount = () => {
-        const token = this.props.match.params.token;
+        const token = this.getParameterByName('t');
+        console.log('t', token);
         try {
             const decode = jwtDecode(token);
-            this.currentUser = new User(decode.name, decode.fullName);
+            if (decode == null) {
+                return;
+            }
+            console.log('decode', decode);
+            this.currentUser = new User(decode.name, decode.fullName)
         } catch (err) {
         }
 
@@ -35,21 +40,25 @@ class App extends Component {
     };
 
     onClick = () => {
-        firebase.auth().signInWithEmailAndPassword('matrixx@matrix.com', 'bT34wfe3FewafG').then(() => {
-            this.writeUserData(this.currentUser.fullName, "text");
+        firebase.auth().signInWithEmailAndPassword('test@test.com', '123456').then(() => {
+            this.writeUserData(this.currentUser.fullName, this.textarea);
         }).catch(function (error) {
             console.log(error)
         });
     };
 
-    writeUserData = (fullName, text) =>  {
-        const data = {};
-        data[fullName] = text;
-        firebase.database().ref('users').set(data);
+    writeUserData = (fullName, text) => {
+        firebase.database().ref('users/' + fullName).set({
+            text: text
+        });
+        this.data = "";
+    };
+
+    handleChange = (event) => {
+        this.textarea = event.target.value;
     };
 
     render() {
-
         return (
             <div className="App">
                 <h1>Wake up {this.currentUser.name}!</h1>
@@ -60,11 +69,23 @@ class App extends Component {
                 <h2>knows____________</h2>
                 <h2>It will help you</h2>
 
-                <textarea value={this.text}></textarea>
+                <textarea value={this.textarea} onChange={this.handleChange}/>
                 <button onClick={this.onClick}>OK</button>
             </div>
         );
     }
+
+    getParameterByName = (name, url) => {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    };
 
 }
 
