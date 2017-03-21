@@ -1,0 +1,14 @@
+body {
+  background: black;
+  font-family: 'Matrix', sans-serif;
+}
+
+@font-face {
+  font-family: 'Matrix';
+  src: url(fonts/MATRIX.ttf);
+}
+
+h1, h2, h3, h4, h5 {
+  color: #1ec503;
+  font-family: 'Matrix', sans-serif;
+}
