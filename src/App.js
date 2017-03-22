@@ -61,7 +61,7 @@ class App extends Component {
             {this.props.isFetching ? "Sending..." : "OK"}
           </button>
 
-          <h2>It will help you</h2>
+          <h2>It'll help you</h2>
 
         </div>
       </div>

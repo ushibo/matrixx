@@ -10,4 +10,5 @@
     padding: 40px;
     background: rgba(0, 0, 0, 0.9);
     border: 1px solid rgba(0, 0, 0, 0.4);
+    overflow: hidden;
 }

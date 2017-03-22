@@ -19,8 +19,7 @@ body {
     font-weight: 400;
     src: local('Roboto Regular'),
     local('Roboto-Regular'),
-    url(http://themes.googleusercontent.com/static/fonts/roboto/v11/2UX7WLTfW3W8TclTUvlFyQ.woff)
-    format('woff');
+    url(http://themes.googleusercontent.com/static/fonts/roboto/v11/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
 }
 
 h1, h2, h3, h4, h5 {
@@ -48,18 +47,18 @@ textarea {
 }
 
 input[type="submit"], input[type="button"], button {
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  width: 100%;
-  padding: 3%;
-  background: #45ea54;
-  border: none;
-  color: #000;
-  font-size: 20px;
-  font-weight: bold;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 3%;
+    background: #45ea54;
+    border: none;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover, button:hover {
@@ -69,7 +68,9 @@ input[type="submit"]:hover, input[type="button"]:hover, button:hover {
 
 button.disabled {
     /*background: #e2cc53;*/
-    background: #88bd91;
+    background: #000;
+    color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #background {

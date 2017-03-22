@@ -14,7 +14,7 @@ const initialState = {
   isSendCompleted: false,
   currentUser: null,
 };
-
+document.title = "Matrixx";
 const store = createStore(reducer, initialState, applyMiddleware(
   thunkMiddleware,
   promiseMiddleware()
