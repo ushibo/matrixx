@@ -1,118 +1,102 @@
-import React, {Component} from "react";
-import jwtDecode from "jwt-decode";
+import React, {Component, PropTypes} from "react";
 import * as firebase  from 'firebase';
+import {connect} from "react-redux";
+import {sendUserText, setCurrentUser, changeText} from "./actions/index";
 
 import "./App.css";
 
-class User {
-    name;
-    fullName;
-
-    constructor(name, fullName) {
-        this.name = name;
-        this.fullName = fullName;
-    }
-}
 
 class App extends Component {
-    textarea;
-    currentUser = new User("John", "John Doe");
-    isSent;
+  componentWillMount = () => {
+    this.props.dispatch(setCurrentUser());
 
-    componentWillMount = () => {
-        const token = this.getParameterByName('t');
-        console.log('t', token);
-        try {
-            const decode = jwtDecode(token);
-            if (decode == null) {
-                return;
-            }
-            console.log('decode', decode);
-            this.currentUser = new User(decode.name, decode.fullName);
-        } catch (err) {
-        }
-
-        var config = {
-            apiKey: "AIzaSyB9dC3YeKiD8EbC7cPSPbkPzEEfFF4EwB8",
-            authDomain: "matrixx-4ebd8.firebaseapp.com",
-            databaseURL: "https://matrixx-4ebd8.firebaseio.com",
-        };
-        firebase.initializeApp(config);
+    const config = {
+      apiKey: "AIzaSyB9dC3YeKiD8EbC7cPSPbkPzEEfFF4EwB8",
+      authDomain: "matrixx-4ebd8.firebaseapp.com",
+      databaseURL: "https://matrixx-4ebd8.firebaseio.com",
     };
+    firebase.initializeApp(config);
+  };
 
-    onClick = () => {
-        firebase.auth().signInWithEmailAndPassword('test@test.com', '123456').then(() => {
-            return this.writeUserData(this.currentUser.fullName, this.textarea);
-        }).then(() => {
-            this.data = "";
-            this.isSent = true;
-            console.log("isSent", this.isSent)
-            this.forceUpdate();
-        }).catch(function (error) {
-            console.log(error);
-            this.isSent = false;
-        });
-    };
+  isDisabled() {
+    return this.props.text.length == 0 || this.props.isFetching;
+  }
 
-    writeUserData = (fullName, text) => {
-        return firebase.database().ref('users/' + fullName).set({
-            text: text
-        });
-    };
+  handleChangeText = (event) => {
+    this.props.dispatch(changeText(event.target.value));
+  };
 
-    handleChange = (event) => {
-        this.textarea = event.target.value;
-    };
+  onSend = () => {
+    if (this.isDisabled()) {
+      return;
+    }
+    this.props.dispatch(sendUserText(this.props.currentUser.fullName, this.props.text));
+  };
 
-
-    render() {
-        if (this.isSent) {
-            return this.renderSentResult()
-        }
-        return this.renderForm();
+  render() {
+    if (this.props.currentUser == null) {
+      return this.renderUnknownUser();
     }
 
-    renderForm() {
-        return (
-            <div className="App">
-                <div className="AppForm">
-                    <h1>Wake up {this.currentUser.name}!</h1>
-                    <h2>The Matrix has you…</h2>
-                    <h2>Free your mind on the 1st of April, Suvorov st. 92, at 6 P.M.</h2>
-
-                    <h2>But now, write here smth about yourself that nobody </h2>
-                    <h2>knows____________</h2>
-                    <h2>It will help you</h2>
-
-                    <textarea value={this.textarea} onChange={this.handleChange}/>
-                    <button onClick={this.onClick}>OK</button>
-                </div>
-            </div>
-        );
+    if (this.props.isSendCompleted) {
+      return this.renderSentResult();
     }
 
-    renderSentResult() {
-        return (
-            <div className="App">
-                <div className="AppForm">
-                    <h1>OK</h1>
-                </div>
-            </div>
-        );
-    }
+    return this.renderForm();
+  }
 
-    getParameterByName = (name, url) => {
-        if (!url) {
-            url = window.location.href;
-        }
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    };
+  renderForm() {
+    return (
+      <div className="App">
+        <div className="AppForm">
+          <h1>Wake up {this.props.currentUser.name}…</h1>
+          <h2>The Matrix has you…</h2>
+          <h2>Free your mind on the 1st of April, 92A Suvorov st., at 6 P.M.</h2>
+
+          <h2>But first, write down smth here about yourself that nobody knows</h2>
+
+          <textarea value={this.props.text} onChange={this.handleChangeText}/>
+          <button className={this.isDisabled() ? "disabled" : ""}
+                  onClick={this.onSend}>
+            {this.props.isFetching ? "Sending..." : "OK"}
+          </button>
+
+          <h2>It will help you</h2>
+
+        </div>
+      </div>
+    );
+  }
+
+  renderSentResult() {
+    return (
+      <div className="App">
+        <div className="AppForm">
+          <h1>Follow the pink rabbit...</h1>
+        </div>
+      </div>
+    );
+  }
+
+  renderUnknownUser() {
+    return (
+      <div className="App">
+        <div className="AppForm">
+          <h1>Do you want to die?</h1>
+        </div>
+      </div>
+    );
+  }
 
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+  text: state.text,
+  isFetching: state.isFetching,
+  isSendCompleted: state.isSendCompleted,
+});
+
+export default connect(
+  mapStateToProps
+)(App)

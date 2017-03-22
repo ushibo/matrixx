@@ -1,39 +1,50 @@
-html,body { height: 100%; margin: 0px; padding: 0px; }
-#root, #full { height: 100% }
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#root, #full {
+    height: 100%
+}
 
 body {
-  background: black;
-  font-family: 'Matrix', sans-serif;
+    background: black;
+    font-family: 'Matrix', sans-serif;
 }
 
 @font-face {
-  font-family: 'Matrix';
-  src: url(fonts/MATRIX.ttf);
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto Regular'),
+    local('Roboto-Regular'),
+    url(http://themes.googleusercontent.com/static/fonts/roboto/v11/2UX7WLTfW3W8TclTUvlFyQ.woff)
+    format('woff');
 }
 
 h1, h2, h3, h4, h5 {
-  color: #5cffbb;
-  font-family: 'Helvetica', sans-serif;
-
+    color: #45ea54;
+    font-family: 'Roboto', sans-serif;
 }
 
 textarea {
-  -webkit-transition: all .30s ease-in-out;
-  -moz-transition: all .30s ease-in-out;
-  -ms-transition: all .30s ease-in-out;
-  -o-transition: all .30s ease-in-out;
-  outline: 0;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  width: 100%;
-  margin-bottom: 4%;
-  border: 1px solid #43d1af;
-  padding: 3%;
-  color: #43d1af;
-  font-family: Arial,Helvetica,sans-serif;
-  font-size: 14px;
-  background: rgba(0,0,0, 0.1);
+    -webkit-transition: all .30s ease-in-out;
+    -moz-transition: all .30s ease-in-out;
+    -ms-transition: all .30s ease-in-out;
+    -o-transition: all .30s ease-in-out;
+    outline: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 4%;
+    border: 1px solid #45ea54;
+    padding: 3%;
+    color: #45ea54;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 input[type="submit"], input[type="button"], button {
@@ -42,38 +53,51 @@ input[type="submit"], input[type="button"], button {
   -moz-box-sizing: border-box;
   width: 100%;
   padding: 3%;
-  background: #43d1af;
-  border-bottom: 2px solid #30c29e;
-  border-top-style: none;
-  border-right-style: none;
-  border-left-style: none;
-  color: #fff;
+  background: #45ea54;
+  border: none;
+  color: #000;
   font-size: 20px;
   font-weight: bold;
 
   cursor: pointer;
 }
-.input[type="submit"]:hover, input[type="button"]:hover, button:hover {
-  background: #2ebc99;
+
+input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+    /*background: #e2b500;*/
+    background: #38bd44;
+}
+
+button.disabled {
+    /*background: #e2cc53;*/
+    background: #88bd91;
 }
 
 #background {
-  background: url(images/background.gif) repeat 5% 5%;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 100;
+    background: url(../public/images/background.gif) repeat 5% 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
 }
 
 #midground {
-  background: url(images/midground.png) repeat 20% 20%;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 100;
+    background: url(../public/images/midground.png) repeat 20% 20%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
 }
 
 #foreground {
-  background: url(images/foreground.png) repeat 90% 110%;
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 200;
+    background: url(../public/images/foreground.png) repeat 90% 110%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
 }
