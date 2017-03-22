@@ -55,7 +55,7 @@ class App extends Component {
 
           <h2>But first, write down smth here about yourself that nobody knows</h2>
 
-          <textarea value={this.props.text} onChange={this.handleChangeText}/>
+          <textarea rows="10" value={this.props.text} onChange={this.handleChangeText}/>
           <button className={this.isDisabled() ? "disabled" : ""}
                   onClick={this.onSend}>
             {this.props.isFetching ? "Sending..." : "OK"}
